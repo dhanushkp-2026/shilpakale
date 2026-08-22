@@ -1,0 +1,729 @@
+@import "tailwindcss";
+
+:root {
+  /* SHILPAKALE Brand Colors */
+  --heritage-green: #0B3A2F;
+  --ivory-archive: #FDF6E3;
+  /* Brighter cream for text use on dark backgrounds */
+  --ivory-archive-text: #FFFFFF;
+  --charcoal-black: #1E1E1E;
+  --archive-sage: #6E8B74;
+
+  /* Temporary fallback font for wordmark */
+  --font-wordmark: var(--font-geist-sans);
+
+  /* Force the approved light brand theme */
+  color-scheme: only light;
+  --background: #FDF6E3;
+  --foreground: #0B3A2F;
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-heritage-green: var(--heritage-green);
+  --color-ivory-archive: var(--ivory-archive);
+  --color-charcoal-black: var(--charcoal-black);
+  --color-archive-sage: var(--archive-sage);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-wordmark: var(--font-wordmark);
+  --font-montserrat: var(--font-montserrat);
+}
+
+/* Removed automatic dark-mode overrides to preserve brand palette on all devices */
+
+/* Ensure the document uses the approved light background and prevents horizontal overflow */
+html,
+body {
+  max-width: 100%;
+  overflow-x: hidden;
+  background: var(--ivory-archive);
+  color: var(--heritage-green);
+}
+
+
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+/* Slightly larger base font for improved readability */
+body {
+  font-size: clamp(1rem, 1.5vw, 1.0625rem); /* ~16-17px responsive */
+  line-height: 1.6;
+}
+
+@media (max-width: 420px) {
+  body {
+    font-size: 1rem; /* ~16px on small screens for comfortable fit */
+  }
+}
+
+/* Heading defaults to prevent tight letter-collisions and ensure comfortable line-height */
+h1 {
+  line-height: 1.08;
+  letter-spacing: -0.005em; /* mild negative for display serif only */
+  font-size: clamp(2rem, 4vw, 3rem);
+}
+
+h2 {
+  line-height: 1.12;
+  letter-spacing: normal;
+  font-size: clamp(1.5rem, 3vw, 2.25rem);
+}
+
+h3 {
+  line-height: 1.12;
+  letter-spacing: normal;
+  font-size: clamp(1.25rem, 2.5vw, 1.75rem);
+}
+
+h4 {
+  line-height: 1.15;
+  letter-spacing: normal;
+  font-size: clamp(1.1rem, 2vw, 1.35rem);
+}
+
+/* Standard content container for consistent section width and padding */
+.content-container {
+  width: 100%;
+  max-width: 85rem; /* ~1360px */
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: clamp(1.25rem, 5vw, 4rem);
+  padding-right: clamp(1.25rem, 5vw, 4rem);
+}
+
+/* Full-width section backgrounds */
+.section-full-width {
+  width: 100%;
+}
+
+/* Standard section vertical spacing */
+.section-spacing-sm {
+  padding-block: clamp(3rem, 6vw, 4.5rem);
+}
+
+.section-spacing-md {
+  padding-block: clamp(4.5rem, 8vw, 7rem);
+}
+
+.section-spacing-lg {
+  padding-block: clamp(6rem, 10vw, 9rem);
+}
+
+/* Smooth scroll behavior */
+html {
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  /* Disable transitions and animations for reduced motion */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* Header Navigation Link Animated Underline */
+.header-nav-link {
+  position: relative;
+  display: inline-flex;
+  text-decoration: none;
+}
+
+.header-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -0.25rem;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: right center;
+  transition: transform 200ms ease;
+}
+
+.header-nav-link:hover::after,
+.header-nav-link:focus-visible::after {
+  transform: scaleX(1);
+  transform-origin: left center;
+}
+
+/* Menu Navigation Link — underline animation (left → right) */
+.menu-nav-link {
+  position: relative;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--ivory-archive-text);
+  padding: 0.45rem 0.9rem;
+  font-size: 0.95rem;
+  line-height: 1;
+  transition: color 180ms ease;
+}
+
+.menu-nav-link::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: 0.12rem;
+  height: 1px;
+  width: 100%;
+  background: var(--ivory-archive);
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 200ms ease;
+}
+
+.menu-nav-link:hover::after,
+.menu-nav-link:focus-visible::after {
+  transform: scaleX(1);
+}
+
+.menu-nav-link:hover,
+.menu-nav-link:focus-visible {
+  color: var(--ivory-archive-text);
+}
+
+/* Compact menu toggle: show a rounded cream border on hover/focus */
+.compact-menu-toggle {
+  position: relative;
+  transition: color 180ms ease, transform 180ms ease;
+}
+
+.compact-menu-toggle::after {
+  content: "";
+  position: absolute;
+  inset: 6px;
+  border-radius: 9999px;
+  border: 2px solid var(--ivory-archive);
+  opacity: 0;
+  transform: scale(0.9);
+  transition: opacity 180ms ease, transform 180ms ease;
+  pointer-events: none;
+}
+
+.compact-menu-toggle:hover::after,
+.compact-menu-toggle:focus-visible::after {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Account Option Button */
+.account-option-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 1.25rem 2rem;
+  border: 1px solid var(--heritage-green);
+  border-radius: 8px;
+  background-color: var(--ivory-archive);
+  color: var(--heritage-green);
+  text-decoration: none;
+  transition: background-color 200ms ease, color 200ms ease;
+  cursor: pointer;
+}
+
+.account-option-button:hover,
+.account-option-button:focus-visible {
+  background-color: var(--heritage-green);
+  color: var(--ivory-archive);
+}
+
+.account-option-button:focus-visible {
+  outline: 2px solid rgba(11, 58, 47, 0.3);
+  outline-offset: 2px;
+}
+
+/* Form Input Field */
+.form-input-field {
+  width: 100%;
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--heritage-green);
+  border-radius: 8px;
+  background: var(--ivory-archive);
+  color: var(--heritage-green);
+  font-size: 1rem;
+  transition: border-color 180ms ease, box-shadow 180ms ease;
+}
+
+.form-input-field:focus {
+  outline: none;
+  border-color: var(--heritage-green);
+  box-shadow: 0 2px 8px rgba(11, 58, 47, 0.12);
+}
+
+.form-input-field::placeholder {
+  color: rgba(11, 58, 47, 0.4);
+}
+
+.form-input-field[aria-invalid="true"] {
+  border-color: #c53030;
+}
+
+/* Featured Collections View Link */
+.featured-collections-link {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid transparent;
+  border-radius: 6px;
+  padding: 0.7rem 1.2rem;
+  color: var(--ivory-archive);
+  background: transparent;
+  text-decoration: none;
+  transition: border-color 200ms ease, background-color 200ms ease;
+  cursor: pointer;
+}
+
+.featured-collections-link:hover,
+.featured-collections-link:focus-visible {
+  border-color: var(--ivory-archive);
+  background-color: rgba(253, 246, 227, 0.08);
+}
+
+.featured-collections-link:focus-visible {
+  outline: none;
+}
+
+/* Featured Products Grid - Simple 2-Column Layout */
+.featured-products-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(1rem, 2vw, 1.5rem);
+  width: 100%;
+}
+
+/* Product 9 spans both columns */
+.featured-product-grid-item--wide {
+  grid-column: 1 / -1;
+}
+
+/* Mobile: Single column layout */
+@media (max-width: 800px) {
+  .featured-products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .featured-product-grid-item--wide {
+    grid-column: 1;
+  }
+}
+
+/* Card Styles - Museum Wall Aesthetic */
+.featured-product-card {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: var(--heritage-green);
+  border-radius: 2px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: box-shadow 220ms ease;
+}
+
+.featured-product-card:hover {
+  box-shadow: 0 2px 12px rgba(11, 58, 47, 0.15);
+}
+
+.featured-product-card:focus-visible {
+  outline: 2px solid var(--heritage-green);
+  outline-offset: 2px;
+  z-index: 1;
+}
+
+.featured-product-card__image {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  min-height: 320px;
+  overflow: hidden;
+  background: var(--heritage-green);
+}
+
+.featured-product-card__image img {
+  transition: transform 240ms ease;
+}
+
+.featured-product-card:hover .featured-product-card__image img,
+.featured-product-card:focus-visible .featured-product-card__image img {
+  transform: scale(1.02);
+}
+
+/* Overlay with refined gradient for better text readability */
+.featured-product-card__overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: clamp(1.5rem, 3vw, 2.5rem);
+  background: linear-gradient(
+    to top,
+    rgba(11, 58, 47, 0.90) 0%,
+    rgba(11, 58, 47, 0.65) 40%,
+    transparent 100%
+  );
+  transition: background 200ms ease;
+}
+
+.featured-product-card:hover .featured-product-card__overlay {
+  background: linear-gradient(
+    to top,
+    rgba(11, 58, 47, 0.92) 0%,
+    rgba(11, 58, 47, 0.70) 40%,
+    transparent 100%
+  );
+}
+
+/* Typography inside overlay */
+.featured-product-card__title {
+  color: var(--ivory-archive);
+  font-family: Georgia, serif;
+  font-size: clamp(1.15rem, 1.8vw, 1.5rem);
+  font-weight: 400;
+  line-height: 1.25;
+  margin-bottom: clamp(0.5rem, 1vw, 0.75rem);
+}
+
+.featured-product-card__description {
+  color: var(--ivory-archive);
+  font-size: clamp(0.85rem, 1.05vw, 0.95rem);
+  line-height: 1.55;
+  opacity: 0.88;
+  margin-bottom: clamp(0.75rem, 1.2vw, 1rem);
+}
+
+/* Discover link inside overlay */
+.featured-product-card__discover {
+  display: inline-block;
+}
+
+.featured-product-card__discover span {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--archive-sage);
+  font-size: clamp(0.75rem, 0.95vw, 0.88rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: color 180ms ease;
+}
+
+.featured-product-card:hover .featured-product-card__discover span {
+  color: var(--ivory-archive);
+}
+
+/* Mobile-only adjustments for Featured Collections CTA to improve distinction */
+@media (max-width: 800px) {
+  .featured-collections-link {
+    padding-block: 0.5rem; /* increase touch target without enlarging text */
+    padding-inline: 0.9rem;
+    min-height: 44px; /* ensure comfortable touch target */
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 600;
+    position: relative;
+  }
+
+  .featured-collections-link::after {
+    content: '→';
+    display: inline-block;
+    transform: translateX(0);
+    transition: transform 220ms cubic-bezier(0.2,0,0,1);
+    margin-left: 0.35rem;
+    color: var(--ivory-archive);
+  }
+
+  /* small separation from the section title on mobile */
+  .featured-collections-link {
+    margin-top: 0.5rem;
+  }
+
+  .featured-collections-link:active::after,
+  .featured-collections-link:focus-visible::after,
+  .featured-collections-link:hover::after {
+    transform: translateX(6px);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .featured-collections-link::after,
+    .featured-collections-link {
+      transition: none !important;
+    }
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .featured-product-card,
+  .featured-product-card__image img,
+  .featured-product-card__overlay,
+  .featured-product-card__title,
+  .featured-product-card__description,
+  .featured-product-card__discover span {
+    transition: none !important;
+  }
+
+  .featured-product-card:hover .featured-product-card__image img,
+  .featured-product-card:focus-visible .featured-product-card__image img {
+    transform: none !important;
+  }
+}
+
+/* Brand Positioning illustrated section - integrated into site surface */
+.brand-position-illustration-section {
+  position: relative;
+  width: 100%;
+  background: var(--ivory-archive);
+  padding-block: clamp(0.25rem, 1vw, 1rem);
+  padding-inline: 0;
+}
+
+/* Full-width image that preserves aspect ratio and blends with the cream background */
+.brand-position-illustration-image {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Overlay copy positioned within the illustration's negative space on desktop, moved below on small screens */
+.brand-position-illustration-wrapper {
+  position: relative;
+}
+
+.brand-position-copy-overlay {
+  position: absolute;
+  right: 6%;
+  top: 30%;
+  max-width: 40%;
+  color: var(--heritage-green);
+  font-family: Georgia, serif;
+  font-size: clamp(1.15rem, 1.5vw, 1.85rem);
+  line-height: 1.4;
+  text-align: left;
+}
+
+.brand-position-line {
+  margin: 0 0 0.6rem 0;
+}
+
+.brand-position-line-strong {
+  font-weight: 600;
+}
+
+@media (max-width: 900px) {
+  .brand-position-copy-overlay {
+    position: static;
+    max-width: 100%;
+    padding: 1rem 1.25rem 0 1.25rem;
+    font-size: clamp(0.98rem, 2.6vw, 1.05rem);
+  }
+
+  .brand-position-illustration-section {
+    padding-block: clamp(0.25rem, 1vw, 1rem);
+  }
+}
+
+@media (min-width: 768px) {
+  .brand-position-illustration-section {
+    padding: clamp(2.5rem, 4vw, 4.5rem) clamp(1.5rem, 4vw, 3rem);
+  }
+}
+
+@media (min-width: 1024px) {
+  .brand-position-illustration-section {
+    padding-block: clamp(0.5rem, 1.5vw, 1.5rem);
+  }
+}
+
+/* ==========================================================================
+   HOMEPAGE HERO
+   ========================================================================== */
+
+.homepage-hero {
+  position: relative;
+  width: 100%;
+  min-height: 100svh;
+  overflow: hidden;
+  background-color: var(--heritage-green);
+}
+
+.homepage-hero-image {
+  object-fit: cover;
+  object-position: center center;
+}
+
+/* Mobile: ensure the full homepage artwork is visible without excessive empty space */
+@media (max-width: 800px) {
+  .homepage-hero {
+    width: 100%;
+    min-height: clamp(75svh, 85svh, 90svh);
+    max-height: 100svh;
+    background: var(--heritage-green);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .homepage-hero-image {
+    /* When Image uses fill, force the rendered image to contain */
+    object-fit: contain !important;
+    object-position: center center !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+}
+
+/* Footer brand artwork responsive container */
+.footer-brand-artwork {
+  width: 100%;
+  background: var(--ivory-archive);
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: clamp(1rem, 4vw, 2rem);
+}
+
+@media (max-width: 800px) {
+  .footer-brand-artwork {
+    min-height: clamp(15rem, 55vw, 24rem);
+  }
+
+  .footer-brand-artwork img {
+    width: min(100%, 48rem);
+    height: auto;
+    object-fit: contain;
+    display: block;
+  }
+}
+
+/* Ensure sr-only content is accessible but not visible */
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border-width: 0;
+}
+
+/* ==========================================================================
+   SCROLL REVEAL SYSTEM
+   ========================================================================== */
+
+/* Scroll Reveal System */
+.scroll-reveal {
+  /* Default: visible without JS */
+  opacity: 1;
+  transform: none;
+}
+
+.scroll-reveal.is-enhanced {
+  /* Hidden initial state after JS enhancement */
+  opacity: 0;
+  transition:
+    opacity var(--reveal-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1),
+    transform var(--reveal-duration, 800ms) cubic-bezier(0.22, 1, 0.36, 1);
+  transition-delay: var(--reveal-delay, 0ms);
+  will-change: opacity, transform;
+}
+
+.scroll-reveal.is-enhanced.is-visible {
+  opacity: 1;
+  transform: translate(0, 0);
+}
+
+/* Direction variants */
+.scroll-reveal--up.is-enhanced {
+  transform: translateY(var(--reveal-distance, 40px));
+}
+
+.scroll-reveal--down.is-enhanced {
+  transform: translateY(calc(-1 * var(--reveal-distance, 40px)));
+}
+
+.scroll-reveal--left.is-enhanced {
+  transform: translateX(var(--reveal-distance, 40px));
+}
+
+.scroll-reveal--right.is-enhanced {
+  transform: translateX(calc(-1 * var(--reveal-distance, 40px)));
+}
+
+.scroll-reveal--none.is-enhanced {
+  transform: none;
+}
+
+/* Reduced motion: disable all animations */
+@media (prefers-reduced-motion: reduce) {
+  .scroll-reveal,
+  .scroll-reveal.is-enhanced {
+    opacity: 1 !important;
+    transform: none !important;
+    transition: none !important;
+  }
+}
+
+/* ==========================================================================
+   Enquiry form dedicated field styles
+   ========================================================================== */
+
+.shilpakale-enquiry-field {
+  width: 100%;
+  min-height: 56px;
+  padding: 0.875rem 1rem;
+  color: var(--heritage-green);
+  background-color: var(--ivory-archive);
+  border: 1px solid var(--heritage-green);
+  border-radius: 8px;
+  outline: none;
+  transition: box-shadow 180ms ease;
+  -webkit-appearance: none;
+  appearance: none;
+}
+
+.shilpakale-enquiry-field:hover,
+.shilpakale-enquiry-field:focus {
+  box-shadow: 0 2px 10px rgba(11, 58, 47, 0.12);
+  outline: none;
+}
+
+.shilpakale-enquiry-field::placeholder {
+  color: rgba(11,58,47,0.4);
+}
+
+.shilpakale-enquiry-textarea {
+  min-height: 170px;
+  resize: none;
+}
+
+/* ==========================================================================
+   Story page breadcrumb and navigation
+   ========================================================================== */
+
+.story-breadcrumb-link:hover {
+  opacity: 0.8 !important;
+}
+
+.story-back-link:hover {
+  border-bottom-color: var(--heritage-green) !important;
+}
